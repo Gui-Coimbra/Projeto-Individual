@@ -11,9 +11,10 @@ while True:
             # print(proc_info)
             # sleep(2)
 
-    sorted(
+    ordenados = sorted(
         p_list,
         key=lambda p: p['cpu_percent'],
-        reverse=True
-    )
-print(p_list)
+        reverse=True)[:10]
+
+    for proc in ordenados:
+        print(proc)

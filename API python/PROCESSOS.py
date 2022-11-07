@@ -5,7 +5,7 @@ while True:
 
     p_list = []
     for proc in psutil.process_iter():
-        proc_info = proc.as_dict(['name', 'cpu_percent'])
+        proc_info = proc.as_dict(['pid', 'name', 'username', 'cpu_percent', 'memory_percent'])
         if proc_info['cpu_percent'] > 0:
             p_list.append(proc_info)
             # print(proc_info)
@@ -18,3 +18,4 @@ while True:
 
     for proc in ordenados:
         print(proc)
+        sleep(1)

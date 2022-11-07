@@ -1,5 +1,5 @@
   # AirData - Monitororamento nos sistemas aéreos
-Repositório para o desenvolvimento do projeto de Pesquisa e Inovação da SPTECH (2º semestre/2022)
+Repositório para o desenvolvimento do projeto individual de Pesquisa e Inovação da SPTECH (2º semestre/2022)
 <img src="Documentos/img/LogoAzulEscuro.svg" alt="LogoEmpresa" style="height: 250px; "/>
 ## Equipe 
 

@@ -1,16 +1,18 @@
-CREATE DATABASE teste;
-USE teste;
+CREATE DATABASE processo;
+USE processo;
 
 drop table processos;
 CREATE TABLE processos(
 idProcesso INT PRIMARY KEY auto_increment,
 nome VARCHAR(50),
 porcentagemCpu DECIMAL(5,2),
+pid VARCHAR(10),
+usuario VARCHAR(50),
 fkServidor INT,
 horario datetime
 );
 
-INSERT INTO processos(nome, porcentagemCpu, fkServidor, horario) VALUES("ivan", 10.0, 1, now());
+select * from processos;
 
 select * from processos where idProcesso = 15;
 SELECT COUNT(*) FROM processos;

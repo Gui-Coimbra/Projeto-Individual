@@ -18,4 +18,7 @@ select * from processos where idProcesso = 15;
 SELECT COUNT(*) FROM processos;
 
 SELECT nome, max(porcentagemCpu) FROM processos WHERE DAY(horario) >= DAY(now()) 
-AND MINUTE(horario) >= MINUTE(now()) GROUP BY nome ORDER BY max(porcentagemCpu) DESC LIMIT 5;
+AND MINUTE(horario) >= MINUTE(now()) GROUP BY nome ORDER BY max(porcentagemCpu) DESC LIMIT 10;
+
+SELECT nome, max(porcentagemCpu), pid, usuario FROM processos WHERE DAY(horario) >= DAY(now()) 
+GROUP BY nome ORDER BY max(porcentagemCpu) DESC LIMIT 10;

@@ -98,6 +98,24 @@ CREATE TABLE parametro (
     FOREIGN KEY(fkComponente_idComponente, fkComponente_fkServidor) REFERENCES componente(idComponente, fkServidor)
 );
 
+CREATE TABLE processos(
+idProcesso INT PRIMARY KEY auto_increment,
+nome VARCHAR(50),
+porcentagemCpu DECIMAL(5,2),
+pid VARCHAR(10),
+usuario VARCHAR(50),
+fkServidor INT,
+horario datetime
+);
+
+select * from processos;
+
+SELECT nome, max(porcentagemCpu) as 'cpu' FROM processos WHERE DAY(horario) >= DAY(now()) 
+AND MINUTE(horario) >= MINUTE(now()) GROUP BY nome ORDER BY max(porcentagemCpu) DESC LIMIT 10;
+
+SELECT nome, max(porcentagemCpu), pid, usuario FROM processos WHERE DAY(horario) >= DAY(now()) 
+GROUP BY nome ORDER BY max(porcentagemCpu) DESC LIMIT 10;
+
 -- Views
 CREATE VIEW vw_iniciarSessao AS
 SELECT idUsuario, nomeUsuario, emailUsuario, senhaUsuario, tipoUsuario, idTorre, torre.fkAeroporto, fkGestor, fkSupervisor
@@ -154,7 +172,8 @@ JOIN torre ON fkTorre = idTorre
 ORDER BY momentoAlerta DESC;
 
 CREATE VIEW vw_onlineServers AS
-	SELECT servidor.fkTorre, fkComponente_fkServidor AS idServidor, MAX(horario) AS ultimaLeitura, TIMESTAMPDIFF(MINUTE, MAX(horario), NOW()) AS minutosDesdeUltimaLeitura, 
+	SELECT servidor.fkTorre, fkComponente_fkServidor AS idServidor, MAX(horario) AS ultimaLeitura, 
+		TIMESTAMPDIFF(MINUTE, MAX(horario), NOW()) AS minutosDesdeUltimaLeitura, 
 		CASE WHEN TIMESTAMPDIFF(MINUTE, MAX(horario), NOW()) > 1 THEN 'OFFLINE'
 		ELSE 'ONLINE'
 		END AS estado

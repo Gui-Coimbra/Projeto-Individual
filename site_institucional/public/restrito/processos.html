@@ -100,4 +100,26 @@
   
     var pagina = "processos";
 
+    function listarTabelaProcessos(listaProcessos) {
+      var bodyTable = document.getElementById('body-table');
+      bodyTable.innerHTML = '';
+      
+      for(i = 0; i < listaProcessos.length; i++) {
+        // var mac = listaProcessos[i].idServidor;
+        // mac = mac.replace(/:/g, "-").toUpperCase();
+  
+        // var dataHorario = listaProcessos[i].momentoAlerta.split("T");
+        // dataHorario = [dataHorario[0].replace(/-/g, "/"), dataHorario[1].slice(0, 8)];
+  
+        bodyTable.innerHTML += `
+          <tr>
+            <td><a href="#">${listaProcessos[i].pid}</a></td>
+            <td>${listaProcessos[i].nome}</td>
+            <td>${listaProcessos[i].usuario}</td>
+            <td>${listaProcessos[i].cpu}</td>
+          </tr>
+        `
+      }
+    }
+
   </script>

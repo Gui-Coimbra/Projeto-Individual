@@ -30,6 +30,8 @@ function iniciarSessao(pagina){
         receberOpcoesFiltros(sessionStorage.ID_TORRE);
     } else if(pagina == 'componentes'){
         receberDadosComponentes(macAdress);
+    } else if(pagina == 'processos'){
+        receberDadosProcessos(sessionStorage.ID_TORRE);
     }
 }
 
@@ -197,6 +199,32 @@ function receberOpcoesFiltros(fkTorre){
             });
         } else {
             console.log('ERRO - não foi possível receber as opções de filtragem')
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+    });
+}
+
+function receberDadosProcessos(fkTorre){
+    fetch("/processos/receberDadosProcessos", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            fkTorreServer: fkTorre
+            // limiteServer: limite,
+        })
+    }).then(function (resposta) {
+        console.log("resposta: ", resposta);
+        if (resposta.ok) {
+            resposta.json().then(json => {
+                console.log(json)
+
+                listarTabelaProcessos(json)
+            });
+        } else {
+            console.log('ERRO - não foi possível receber os dados dos Processos')
         }
     }).catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);

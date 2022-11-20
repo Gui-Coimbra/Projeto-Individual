@@ -110,10 +110,10 @@ horario datetime
 
 select * from processos;
 
-SELECT nome, max(porcentagemCpu) as 'cpu' FROM processos WHERE DAY(horario) >= DAY(now()) 
+SELECT nome, max(porcentagemCpu) FROM processos WHERE DAY(horario) >= DAY(now()) 
 AND MINUTE(horario) >= MINUTE(now()) GROUP BY nome ORDER BY max(porcentagemCpu) DESC LIMIT 10;
 
-SELECT nome, max(porcentagemCpu), pid, usuario FROM processos WHERE DAY(horario) >= DAY(now()) 
+SELECT nome, max(porcentagemCpu) as 'cpu', pid, usuario FROM processos WHERE DAY(horario) >= DAY(now()) 
 GROUP BY nome ORDER BY max(porcentagemCpu) DESC LIMIT 10;
 
 -- Views

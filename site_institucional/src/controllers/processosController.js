@@ -23,6 +23,27 @@ function receberDadosProcessos(req, res) {
     }
 }
 
+function deletarProcesso(req, res) {
+    let pid = req.body.pid;
+
+    if (pid == undefined) {
+        res.status(400).send("O pid está undefined!");
+    } else {
+        metricaModel.deletar(pid).then(function (resposta) {
+            res.json(resposta);
+        }).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao deletar o processo! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+
+    }
+
+}
+
 module.exports = {
-    receberDadosProcessos
+    receberDadosProcessos,
+    deletarProcesso
 }

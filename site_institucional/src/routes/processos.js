@@ -7,4 +7,8 @@ router.post("/receberDadosProcessos", function (req, res) {
     processosController.receberDadosProcessos(req, res);
 });
 
+router.post("/deletarProcesso", function (req, res) {
+    processosController.deletarProcesso(req, res);
+});
+
 module.exports = router;

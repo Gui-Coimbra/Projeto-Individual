@@ -24,12 +24,12 @@ function receberDadosProcessos(req, res) {
 }
 
 function deletarProcesso(req, res) {
-    let pid = req.body.pid;
-
+    let pid = req.body.pidServer;
+    console.log(`Meu amigo pid ${pid}`)
     if (pid == undefined) {
         res.status(400).send("O pid está undefined!");
     } else {
-        metricaModel.deletar(pid).then(function (resposta) {
+        processosModel.deletarProcesso(pid).then(function (resposta) {
             res.json(resposta);
         }).catch(
             function (erro) {

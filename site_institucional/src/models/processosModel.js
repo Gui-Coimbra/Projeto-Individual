@@ -15,9 +15,7 @@ function listarProcessos(fkTorre) {
 
 function deletarProcesso(pid) {
     var instrucao = `INSERT INTO deletarPid(pid) values (${pid});`
-    database.executar(instrucao);
     return database.executar(instrucao);
-
 }
 
 module.exports = {

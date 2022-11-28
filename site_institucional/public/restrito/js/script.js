@@ -31,7 +31,7 @@ function iniciarSessao(pagina){
     } else if(pagina == 'componentes'){
         receberDadosComponentes(macAdress);
     } else if(pagina == 'processos'){
-        receberDadosProcessos(sessionStorage.ID_TORRE);
+        receberDadosProcessos(sessionStorage.ID_TORRE, 10);
     }
 }
 
@@ -205,15 +205,15 @@ function receberOpcoesFiltros(fkTorre){
     });
 }
 
-function receberDadosProcessos(fkTorre){
+function receberDadosProcessos(fkTorre, limite){
     fetch("/processos/receberDadosProcessos", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            fkTorreServer: fkTorre
-            // limiteServer: limite,
+            fkTorreServer: fkTorre,
+            limiteServer: limite,
         })
     }).then(function (resposta) {
         console.log("resposta: ", resposta);

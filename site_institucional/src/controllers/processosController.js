@@ -2,12 +2,12 @@ var processosModel = require("../models/processosModel");
 
 function receberDadosProcessos(req, res) {
     var fkTorre = req.body.fkTorreServer;
-    // var limite = req.body.limiteServer;
+    var limite = req.body.limiteServer;
 
     if (fkTorre == undefined) {
         res.status(400).send("A fkTorre do aeroporto está undefined!");
     } else {
-        processosModel.listarProcessos(fkTorre)
+        processosModel.listarProcessos(fkTorre, limite)
             .then(
                 function (resultado) {
                     console.log(`\nProcessos: ${resultado}`);

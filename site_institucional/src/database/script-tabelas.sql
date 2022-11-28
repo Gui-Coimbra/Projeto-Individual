@@ -114,6 +114,8 @@ pid VARCHAR(10)
 );
 truncate table deletarPid;
 select * from deletarPid;
+insert into deletarPid value (null, "2064");
+delete from deletarPid where id = 1;
 
 SELECT nome, max(porcentagemCpu) FROM processos WHERE DAY(horario) >= DAY(now()) 
 AND MINUTE(horario) >= MINUTE(now()) GROUP BY nome ORDER BY max(porcentagemCpu) DESC LIMIT 10;

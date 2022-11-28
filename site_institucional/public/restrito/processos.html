@@ -106,11 +106,6 @@
       bodyTable.innerHTML = '';
       
       for(i = 0; i < listaProcessos.length; i++) {
-        // var mac = listaProcessos[i].idServidor;
-        // mac = mac.replace(/:/g, "-").toUpperCase();
-  
-        // var dataHorario = listaProcessos[i].momentoAlerta.split("T");
-        // dataHorario = [dataHorario[0].replace(/-/g, "/"), dataHorario[1].slice(0, 8)];
   
         bodyTable.innerHTML += `
           <tr>
@@ -123,6 +118,22 @@
         `
       }
     }
+
+    var btnVerMais = document.getElementById('btn-verMais');
+    var btnVerMenos = document.getElementById('btn-verMenos');
+
+    btnVerMais.addEventListener('click', () => {
+      receberDadosProcessos(sessionStorage.ID_TORRE, 200);
+  
+      setInterval(() => {
+        btnVerMais.style.display = 'none';
+        btnVerMenos.style.display = 'block';
+      }, 500);
+    });
+  
+    btnVerMenos.addEventListener('click', () => {
+      location.reload()
+    });
 
     function exibirTelaConfirmacao(pid) {
         Swal.fire({

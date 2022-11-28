@@ -1,8 +1,8 @@
 from datetime import datetime
 from time import sleep
-from dashing import HSplit, VSplit, VGauge, HGauge, Text
 import psutil
 import os
+from sys import platform
 import mysql.connector
 import matplotlib.pyplot as plt
 
@@ -12,6 +12,12 @@ mycursor = bdsql.cursor()
 
 def limpar():
     os.system('cls' if os.name == 'nt' else 'clear')
+    
+def matarProcesso(pid):
+    if platform == "linux" or platform == "linux2":
+        os.system('kill '+str(pid))
+    elif platform == "win32":
+        os.system('TASKKILL /PID ' + str(pid) + ' /F')
 
 while True:
     lista_processos = []
@@ -19,7 +25,7 @@ while True:
         # print(processos)
         processos_info = processos.as_dict(['name', 'cpu_percent', 'pid', 'username'])
         if processos_info['cpu_percent'] > 0:
-            print(processos_info)
+            # print(processos_info)
             lista_processos.append(processos_info)
             pid = processos_info['pid']
             usuario = processos_info['username']
@@ -31,12 +37,26 @@ while True:
 
             bdsql.commit()
             sleep(1)
+            print("Executando...")
             
-    # sql = "SELECT nome, max(porcentagemCpu) FROM processos WHERE fkServidor = 1 AND DAY(horario) >= DAY(now()) AND MINUTE(horario) >= MINUTE(now()) GROUP BY nome ORDER BY max(porcentagemCpu) DESC LIMIT 5"
+    sql = "select * from deletarPid;"
 
-    # mycursor.execute(sql)
+    mycursor.execute(sql)
 
-    # resposta = mycursor.fetchall()
+    resposta = mycursor.fetchall()
+    
+    if(len(resposta) > 0):
+    
+        for row in resposta:
+            pid = row[1]
+            matarProcesso(pid)
+            sql = "delete from deletarPid where pid = %s;"
+            val = (pid, )
+            mycursor.execute(sql,val)
+            bdsql.commit()
+            sleep(1)
+    # else:
+    #     break
     
     # ordenados = []
     # for row in resposta:

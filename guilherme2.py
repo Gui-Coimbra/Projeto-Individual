@@ -11,7 +11,7 @@ mycursor = bdsql.cursor()
 
 while True:
 
-    querry = "SELECT nome, max(porcentagemCpu) FROM processos WHERE DAY(horario) >= DAY(now()) GROUP BY nome, pid, usuario ORDER BY max(porcentagemCpu) DESC LIMIT 10;"
+    querry = "SELECT nome, max(porcentagemCpu) FROM processos WHERE DAY(horario) >= DAY(now()) GROUP BY nome ORDER BY max(porcentagemCpu) DESC LIMIT 10;"
 
     mycursor.execute(querry)
 

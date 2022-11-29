@@ -125,9 +125,15 @@ AND MINUTE(horario) >= MINUTE(now()) GROUP BY nome ORDER BY max(porcentagemCpu) 
 SELECT nome, max(porcentagemCpu) as 'cpu', pid, usuario FROM processos WHERE DAY(horario) >= DAY(now()) 
 GROUP BY nome ORDER BY max(porcentagemCpu) DESC LIMIT 10;
 
-SELECT nome, max(porcentagemCpu) as 'cpu', pid, usuario, horario FROM processos 
+SELECT nome, max(porcentagemCpu) as 'cpu', pid, usuario FROM processos 
         WHERE DAY(horario) >= DAY(now()) AND MINUTE(horario) >= MINUTE(now())
-        GROUP BY nome, pid, usuario, horario ORDER BY max(porcentagemCpu) DESC LIMIT 10;
+        GROUP BY nome, pid, usuario ORDER BY max(porcentagemCpu) DESC LIMIT 10;
+        
+SELECT nome, horario, max(porcentagemCpu) AS 'cpuValor' 
+FROM processos 
+WHERE horario >= now()
+GROUP BY nome, horario 
+ORDER BY cpuValor DESC LIMIT 20;
 
 -- Views
 CREATE VIEW vw_iniciarSessao AS

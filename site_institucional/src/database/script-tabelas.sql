@@ -240,23 +240,24 @@ Insert INTO servidor values(1,1);
 # antes de inserir esses dados abaixo, 
 # cadastre o servidor na API python e 
 ## mude o a variável @macAddress para o seu endereço mac!!!!
-SET @macAddress = 'b0:68:e6:f5:21:e1';
+SET @macAddress = 'b0:68:e6:f5:21:7f';
 
 INSERT INTO componente (idComponente, fkServidor, tipoComponente, nomeComponente, memoria, tipoMemoria) VALUES 
-(null, 'b0:68:e6:f5:21:e1', 'CPU', 'CPU1', 4.00, 'Registrador');
+(null, 'b0:68:e6:f5:21:7f', 'CPU', 'CPU1', 4.00, 'Registrador');
 INSERT INTO componente (idComponente, fkServidor, tipoComponente, nomeComponente, memoria, tipoMemoria) VALUES 
-(null, 'b0:68:e6:f5:21:e1', 'RAM', 'RAM1', 16.00, 'RAM');
+(null, 'b0:68:e6:f5:21:7f', 'RAM', 'RAM1', 16.00, 'RAM');
 INSERT INTO componente (idComponente, fkServidor, tipoComponente, nomeComponente, memoria, tipoMemoria) VALUES 
-(null, 'b0:68:e6:f5:21:e1', 'DISK', 'DISK1', 500.00, 'HD');
+(null, 'b0:68:e6:f5:21:7f', 'DISK', 'DISK1', 500.00, 'HD');
 
+select * from componente;
 INSERT INTO parametro (fkMetrica, fkComponente_idComponente, fkComponente_fkServidor) VALUES 
-(1, 4, 'b0:68:e6:f5:21:e1');
+(1, 1, 'b0:68:e6:f5:21:7f');
 INSERT INTO parametro (fkMetrica, fkComponente_idComponente, fkComponente_fkServidor) VALUES 
 (4, 1, @macAddress);
 INSERT INTO parametro (fkMetrica, fkComponente_idComponente, fkComponente_fkServidor) VALUES 
-(2, 5, @macAddress);
+(2, 2, @macAddress);
 INSERT INTO parametro (fkMetrica, fkComponente_idComponente, fkComponente_fkServidor) VALUES 
-(3, 6, @macAddress);
+(3, 3, @macAddress);
 
 SELECT * FROM usuario;
 SELECT * FROM empresa;

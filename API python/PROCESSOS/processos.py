@@ -39,40 +39,22 @@ while True:
             sleep(1)
             print("Executando...")
             
-    sql = "select * from deletarPid;"
+        sql = "select * from deletarPid;"
 
-    mycursor.execute(sql)
+        mycursor.execute(sql)
 
-    resposta = mycursor.fetchall()
-    
-    if(len(resposta) > 0):
-    
-        for row in resposta:
-            pid = row[1]
-            matarProcesso(pid)
-            sql = "delete from deletarPid where pid = %s;"
-            val = (pid, )
-            mycursor.execute(sql,val)
-            bdsql.commit()
-            sleep(1)
-    # else:
-    #     break
-    
-    # ordenados = []
-    # for row in resposta:
-    #     ordenados.append({'name': row[0], 'cpu_percent': row[1]})
-        
-    #for processos in ordenados:
-        #print("-"*30)
-        #print(processos)
-        #print("-"*30)
-        
-    #sleep(5)    
-    #limpar()
-            
-    #try:#testar um bloco de codigo
-    #    # interface_usuario.display() #mostra a interface
-    #    print()
-    #    sleep(1) #espera 1 segundo para mostrar a proxima informação
-    #except KeyboardInterrupt:
-    #    break #encerra o loop ao pressionar Ctrl+C
+        resposta = mycursor.fetchall()
+
+        if(len(resposta) > 0):
+
+            for row in resposta:
+                pid = row[1]
+                matarProcesso(pid)
+                sql = "delete from deletarPid where pid = %s;"
+                val = (pid, )
+                mycursor.execute(sql,val)
+                sql = "delete from processos where pid = %s;"
+                val = (pid, )
+                mycursor.execute(sql,val)
+                bdsql.commit()
+                sleep(1)

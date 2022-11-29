@@ -1,45 +1,42 @@
-from random import sample
+from time import sleep
 import numpy as np
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
-from PIL import Image
 import mysql.connector
-import psutil
+from datetime import date
 
 bdsql = mysql.connector.connect(host="localhost", user="aluno", password="sptech", database="airData", autocommit=True)
 
 mycursor = bdsql.cursor()
 
-querry = "SELECT nome, max(porcentagemCpu) FROM processos WHERE DAY(horario) >= DAY(now()) GROUP BY nome, pid, usuario ORDER BY max(porcentagemCpu) DESC LIMIT 10;"
+while True:
 
-mycursor.execute(querry)
+    querry = "SELECT nome, max(porcentagemCpu) FROM processos WHERE DAY(horario) >= DAY(now()) GROUP BY nome, pid, usuario ORDER BY max(porcentagemCpu) DESC LIMIT 10;"
 
-resposta = mycursor.fetchall()
+    mycursor.execute(querry)
 
-processos = []
-for row in resposta:
-    for row2 in range(0, int(row[1])):
-        processos.append(str(row[0]))
+    resposta = mycursor.fetchall()
 
-
-# ocorrencias = ["dashboard_não_aparece"] * 60 + ["dashboard_travado "] * 160 + ["temperatura_elevada"] * 120 + ["cpu_consumo_elevado"] * 80 + ["aplicação_lenta"] * 100 + ["upload_lento"] * 60 + ["download_lento"] * 20 + ["memoria_cheia"] * 20 + ["alerta_dispara"] * 20 + ["dados_incorretos"] * 20 + ["disco_consumo_elevado"] * 20 + ["usuario_não_pode_ser_cadastrado"] * 40 + ["maquina_não_pode_ser_cadastrada"] * 20 + ["login_não_funciona"] * 20
-
-# print(processos)
-
-# amostra = sample(ocorrencias, 300)
-
-texto = " ".join(processos)
-
-# mask = np.array(Image.open("cloud.png"))
-# word_cloud = WordCloud(collocations = False, background_color = 'black', mask=mask, contour_color='white', contour_width=3).generate(texto)
+    processos = []
+    for row in resposta:
+        for row2 in range(0, int(row[1])):
+            processos.append(str(row[0]))
 
 
-# plt.imshow(word_cloud, interpolation='bilinear')
-# plt.axis("off")
-# plt.show()
+    # print(processos)
 
-word_cloud = WordCloud(collocations = False, background_color = 'white').generate(texto)
+    texto = " ".join(processos)
 
-plt.imshow(word_cloud)
-plt.axis("off")
-plt.show()
+    word_cloud = WordCloud(collocations = False,
+                        width=800, height=800,
+                        background_color = 'white').generate(texto)
+
+    plt.imshow(word_cloud)
+    plt.axis("off")
+
+    fig1 = plt.gcf()
+    plt.show()
+
+    fig1.savefig("site_institucional/public/assets/img/" + "wordcloudProcessos.png", dpi=100)
+
+    sleep(1)

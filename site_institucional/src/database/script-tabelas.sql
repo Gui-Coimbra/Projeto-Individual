@@ -117,11 +117,17 @@ select * from deletarPid;
 insert into deletarPid value (null, "2064");
 delete from deletarPid where id = 1;
 
+SELECT nome, max(porcentagemCpu) FROM processos WHERE DAY(horario) >= DAY(now()) GROUP BY nome, pid, usuario ORDER BY max(porcentagemCpu) DESC LIMIT 10;
+
 SELECT nome, max(porcentagemCpu) FROM processos WHERE DAY(horario) >= DAY(now()) 
 AND MINUTE(horario) >= MINUTE(now()) GROUP BY nome ORDER BY max(porcentagemCpu) DESC LIMIT 10;
 
 SELECT nome, max(porcentagemCpu) as 'cpu', pid, usuario FROM processos WHERE DAY(horario) >= DAY(now()) 
 GROUP BY nome ORDER BY max(porcentagemCpu) DESC LIMIT 10;
+
+SELECT nome, max(porcentagemCpu) as 'cpu', pid, usuario, horario FROM processos 
+        WHERE DAY(horario) >= DAY(now()) AND MINUTE(horario) >= MINUTE(now())
+        GROUP BY nome, pid, usuario, horario ORDER BY max(porcentagemCpu) DESC LIMIT 10;
 
 -- Views
 CREATE VIEW vw_iniciarSessao AS

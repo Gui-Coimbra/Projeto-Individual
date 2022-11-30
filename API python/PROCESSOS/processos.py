@@ -6,7 +6,7 @@ from sys import platform
 import mysql.connector
 import matplotlib.pyplot as plt
 
-bdsql = mysql.connector.connect(host="localhost", user="root", password="sptech", database="airData", autocommit=True)
+bdsql = mysql.connector.connect(host="localhost", user="aluno", password="sptech", database="airData", autocommit=True)
 
 mycursor = bdsql.cursor()
 
@@ -24,7 +24,7 @@ while True:
     for processos in psutil.process_iter():
         # print(processos)
         processos_info = processos.as_dict(['name', 'cpu_percent', 'pid', 'username'])
-        if processos_info['cpu_percent'] > 0:
+        if processos_info['cpu_percent'] > 0 and processos_info['username'] != "root":
             # print(processos_info)
             lista_processos.append(processos_info)
             pid = processos_info['pid']

@@ -127,15 +127,11 @@ AND MINUTE(horario) >= MINUTE(now()) GROUP BY nome ORDER BY max(porcentagemCpu) 
 SELECT nome, max(porcentagemCpu) as 'cpu', pid, usuario FROM processos WHERE DAY(horario) >= DAY(now()) 
 GROUP BY nome ORDER BY max(porcentagemCpu) DESC LIMIT 10;
 
-SELECT nome, max(porcentagemCpu) as 'cpu', pid, usuario FROM processos 
-        WHERE DAY(horario) >= DAY(now()) AND MINUTE(horario) >= MINUTE(now())
-        GROUP BY nome, pid, usuario ORDER BY max(porcentagemCpu) DESC LIMIT 10;
-        
-SELECT nome, horario, max(porcentagemCpu) AS 'cpuValor' 
-FROM processos 
-WHERE horario >= now()
-GROUP BY nome, horario 
-ORDER BY cpuValor DESC LIMIT 20;
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+
+SELECT nome, sum(porcentagemCpu) as "cpu", pid, usuario FROM processos 
+        WHERE DAY(horario) >= DAY(now()) AND HOUR(horario) >= HOUR(now()) 
+        GROUP BY nome ORDER BY sum(porcentagemCpu) DESC LIMIT 10;
 
 -- Views
 CREATE VIEW vw_iniciarSessao AS
@@ -254,18 +250,18 @@ Insert INTO servidor values(1,1);
 # antes de inserir esses dados abaixo, 
 # cadastre o servidor na API python e 
 ## mude o a variável @macAddress para o seu endereço mac!!!!
-SET @macAddress = 'b0:68:e6:f5:21:7f';
+SET @macAddress = 'b0:68:e6:f5:22:07';
 
 INSERT INTO componente (idComponente, fkServidor, tipoComponente, nomeComponente, memoria, tipoMemoria) VALUES 
-(null, 'b0:68:e6:f5:21:7f', 'CPU', 'CPU1', 4.00, 'Registrador');
+(null, 'b0:68:e6:f5:22:07', 'CPU', 'CPU1', 4.00, 'Registrador');
 INSERT INTO componente (idComponente, fkServidor, tipoComponente, nomeComponente, memoria, tipoMemoria) VALUES 
-(null, 'b0:68:e6:f5:21:7f', 'RAM', 'RAM1', 16.00, 'RAM');
+(null, 'b0:68:e6:f5:22:07', 'RAM', 'RAM1', 16.00, 'RAM');
 INSERT INTO componente (idComponente, fkServidor, tipoComponente, nomeComponente, memoria, tipoMemoria) VALUES 
-(null, 'b0:68:e6:f5:21:7f', 'DISK', 'DISK1', 500.00, 'HD');
+(null, 'b0:68:e6:f5:22:07', 'DISK', 'DISK1', 500.00, 'HD');
 
 select * from componente;
 INSERT INTO parametro (fkMetrica, fkComponente_idComponente, fkComponente_fkServidor) VALUES 
-(1, 1, 'b0:68:e6:f5:21:7f');
+(1, 1, 'b0:68:e6:f5:22:07');
 INSERT INTO parametro (fkMetrica, fkComponente_idComponente, fkComponente_fkServidor) VALUES 
 (4, 1, @macAddress);
 INSERT INTO parametro (fkMetrica, fkComponente_idComponente, fkComponente_fkServidor) VALUES 

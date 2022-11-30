@@ -117,6 +117,8 @@ select * from deletarPid;
 insert into deletarPid value (null, "2064");
 delete from deletarPid where id = 1;
 
+describe select * from processos;
+
 SELECT nome, max(porcentagemCpu) FROM processos WHERE DAY(horario) >= DAY(now()) GROUP BY nome, pid, usuario ORDER BY max(porcentagemCpu) DESC LIMIT 10;
 
 SELECT nome, max(porcentagemCpu) FROM processos WHERE DAY(horario) >= DAY(now()) 

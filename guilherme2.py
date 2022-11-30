@@ -5,13 +5,13 @@ from wordcloud import WordCloud
 import mysql.connector
 from datetime import date
 
-bdsql = mysql.connector.connect(host="localhost", user="aluno", password="sptech", database="airData", autocommit=True)
+bdsql = mysql.connector.connect(host="localhost", user="root", password="sptech", database="airData", autocommit=True)
 
 mycursor = bdsql.cursor()
 
 while True:
 
-    querry = "SELECT nome, max(porcentagemCpu) FROM processos WHERE DAY(horario) >= DAY(now()) GROUP BY nome ORDER BY max(porcentagemCpu) DESC LIMIT 10;"
+    querry = "SELECT nome, max(porcentagemCpu) as 'cpu', pid, usuario FROM processos WHERE DAY(horario) >= DAY(now()) AND MINUTE(horario) >= MINUTE(now()) GROUP BY nome, pid, usuario ORDER BY max(porcentagemCpu) DESC LIMIT 10;"
 
     mycursor.execute(querry)
 

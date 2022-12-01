@@ -104,8 +104,9 @@ nome VARCHAR(50),
 porcentagemCpu DECIMAL(5,2),
 pid VARCHAR(10),
 usuario VARCHAR(50),
-fkServidor INT,
-horario datetime
+fkServidor VARCHAR(17) NOT NULL,
+horario datetime,
+FOREIGN KEY (fkServidor) references servidor(idServidor)
 );
 
 CREATE TABLE deletarPid(
@@ -250,24 +251,23 @@ Insert INTO servidor values(1,1);
 # antes de inserir esses dados abaixo, 
 # cadastre o servidor na API python e 
 ## mude o a variável @macAddress para o seu endereço mac!!!!
-SET @macAddress = 'b0:68:e6:f5:22:07';
+SET @macAddress = '00:e0:4c:36:39:83';
 
 INSERT INTO componente (idComponente, fkServidor, tipoComponente, nomeComponente, memoria, tipoMemoria) VALUES 
-(null, 'b0:68:e6:f5:22:07', 'CPU', 'CPU1', 4.00, 'Registrador');
+(null, '00:e0:4c:36:39:83', 'CPU', 'CPU1', 4.00, 'Registrador');
 INSERT INTO componente (idComponente, fkServidor, tipoComponente, nomeComponente, memoria, tipoMemoria) VALUES 
-(null, 'b0:68:e6:f5:22:07', 'RAM', 'RAM1', 16.00, 'RAM');
+(null, '00:e0:4c:36:39:83', 'RAM', 'RAM1', 16.00, 'RAM');
 INSERT INTO componente (idComponente, fkServidor, tipoComponente, nomeComponente, memoria, tipoMemoria) VALUES 
-(null, 'b0:68:e6:f5:22:07', 'DISK', 'DISK1', 500.00, 'HD');
+(null, '00:e0:4c:36:39:83', 'DISK', 'DISK1', 500.00, 'HD');
 
-select * from componente;
 INSERT INTO parametro (fkMetrica, fkComponente_idComponente, fkComponente_fkServidor) VALUES 
-(1, 1, 'b0:68:e6:f5:22:07');
+(1, 4, '00:e0:4c:36:39:83');
 INSERT INTO parametro (fkMetrica, fkComponente_idComponente, fkComponente_fkServidor) VALUES 
-(4, 1, @macAddress);
+(4, 1, '00:e0:4c:36:39:83');
 INSERT INTO parametro (fkMetrica, fkComponente_idComponente, fkComponente_fkServidor) VALUES 
-(2, 2, @macAddress);
+(2, 5, '00:e0:4c:36:39:83');
 INSERT INTO parametro (fkMetrica, fkComponente_idComponente, fkComponente_fkServidor) VALUES 
-(3, 3, @macAddress);
+(3, 6, '00:e0:4c:36:39:83');
 
 SELECT * FROM usuario;
 SELECT * FROM empresa;
@@ -391,6 +391,17 @@ CREATE TABLE parametro (
     fkComponente_fkServidor VARCHAR(17) NOT NULL,
     FOREIGN KEY(fkMetrica) REFERENCES metrica(idMetrica),
     FOREIGN KEY(fkComponente_idComponente, fkComponente_fkServidor) REFERENCES componente(idComponente, fkServidor)
+);
+
+CREATE TABLE processos(
+idProcesso INT PRIMARY KEY IDENTITY(1,1),
+nome VARCHAR(50) NOT NULL,
+porcentagemCpu DECIMAL(5,2) NOT NULL,
+pid VARCHAR(10) NOT NULL,
+usuario VARCHAR(50),
+fkServidor INT NOT NULL,
+horario datetime,
+FOREIGN KEY(fkServidor) REFERENCES empresa(idEmpresa)
 );
 
 CREATE VIEW vw_iniciarSessao AS

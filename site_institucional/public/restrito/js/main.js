@@ -37,16 +37,6 @@ class mySidebar extends HTMLElement {
 
             <li class="nav-item">
                 
-                <a id="processo-link" class="nav-link" href="./processos.html">
-                    <i class="bi bi-people-fill"></i>
-                    <span style="font-size:1rem">Processos</span></a>
-                    
-            </li>
-
-            <hr class="sidebar-divider">
-
-            <li class="nav-item">
-                
                 <a id="usuario-link" class="nav-link" href="./usuarios.html">
                     <i class="bi bi-people-fill"></i>
                     <span style="font-size:1rem">Usuários</span></a>
